@@ -1,5 +1,10 @@
 import fastify from 'fastify'
+import { knex } from './infra/database'
 
 export const app = fastify()
 
-app.get('/', () => ({ message: 'Hello World!' }))
+app.get('/', async () => {
+  const meals = await knex('meals').select()
+
+  return { meals }
+})
