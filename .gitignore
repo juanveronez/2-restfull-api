@@ -1,1 +1,4 @@
 node_modules
+
+# Databases
+tmp/*.db
