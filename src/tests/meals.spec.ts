@@ -62,4 +62,27 @@ describe('[routes] /meals', async () => {
       ],
     })
   })
+
+  it('GET /meals/:id', async () => {
+    await request(app.server).post('/meals').send(meal1).expect(201)
+
+    const mealsResponse = await request(app.server).get('/meals')
+
+    const mealId = mealsResponse.body.meals[0].id
+    expect(mealId).toBeDefined()
+
+    const mealResponse = await request(app.server)
+      .get(`/meals/${mealId}`)
+      .expect(200)
+
+    expect(mealResponse.body.meal).toEqual(
+      expect.objectContaining({
+        name: 'Breakfast',
+        description: '1st meal of the day :)',
+        is_diet: 1,
+        date: '2025-06-12',
+        time: '08:35',
+      }),
+    )
+  })
 })

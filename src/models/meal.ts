@@ -8,4 +8,9 @@ export const createMealSchema = z.object({
   time: z.string().time(),
 })
 
+export const getMealParamsSchema = z.object({
+  id: z.string().uuid(),
+})
+
 export type CreateMeal = z.infer<typeof createMealSchema>
+export type GetMealParams = z.infer<typeof getMealParamsSchema>

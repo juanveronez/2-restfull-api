@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { knex } from '../infra/database'
-import { createMealSchema } from '../models/meal'
+import { createMealSchema, getMealParamsSchema } from '../models/meal'
 
 export function mealsRoute(app: FastifyInstance) {
   app.get('/', async () => {
@@ -13,5 +13,11 @@ export function mealsRoute(app: FastifyInstance) {
     await knex('meals').insert(meal)
 
     return reply.status(201).send()
+  })
+
+  app.get('/:id', async ({ params }) => {
+    const { id } = getMealParamsSchema.parse(params)
+    const meal = await knex('meals').select().where('id', id).first()
+    return { meal }
   })
 }
