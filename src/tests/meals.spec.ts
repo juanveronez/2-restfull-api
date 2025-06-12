@@ -14,6 +14,22 @@ describe('[routes] /meals', async () => {
   }
 
   const meal2: CreateMeal = {
+    name: 'Frutinha',
+    description: '1st meal of the day :)',
+    is_diet: true,
+    date: '2025-06-12',
+    time: '09:35',
+  }
+
+  const meal3: CreateMeal = {
+    name: 'Aveia',
+    description: '1st meal of the day :)',
+    is_diet: true,
+    date: '2025-06-12',
+    time: '10:35',
+  }
+
+  const meal4: CreateMeal = {
     name: 'Take a chocolate bar',
     description: 'I was sad and take something to eat',
     is_diet: false,
@@ -40,7 +56,7 @@ describe('[routes] /meals', async () => {
 
   it('GET /meals', async () => {
     await request(app.server).post('/meals').send(meal1).expect(201)
-    await request(app.server).post('/meals').send(meal2).expect(201)
+    await request(app.server).post('/meals').send(meal4).expect(201)
 
     const response = await request(app.server).get('/meals')
     expect(response.body).toEqual({
@@ -108,7 +124,7 @@ describe('[routes] /meals', async () => {
     const mealId = mealsResponse.body.meals[0].id
     expect(mealId).toBeDefined()
 
-    await request(app.server).put(`/meals/${mealId}`).send(meal2).expect(200)
+    await request(app.server).put(`/meals/${mealId}`).send(meal4).expect(200)
 
     const mealResponse = await request(app.server).get(`/meals/${mealId}`)
     expect(mealResponse.body.meal).toEqual(
@@ -120,5 +136,19 @@ describe('[routes] /meals', async () => {
         time: '11:25',
       }),
     )
+  })
+
+  it('GET /meals/metrics', async () => {
+    await request(app.server).post('/meals').send(meal1).expect(201)
+    await request(app.server).post('/meals').send(meal2).expect(201)
+    await request(app.server).post('/meals').send(meal3).expect(201)
+    await request(app.server).post('/meals').send(meal4).expect(201)
+
+    const response = await request(app.server).get('/meals/metrics')
+    expect(response.body.metrics).toEqual({
+      total: 4,
+      diet: 3,
+      not_diet: 1,
+    })
   })
 })

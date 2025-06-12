@@ -34,4 +34,20 @@ export function mealsRoute(app: FastifyInstance) {
     await knex('meals').update(updateMeal).where('id', id)
     return reply.status(200).send()
   })
+
+  app.get('/metrics', async () => {
+    const [total, diet, notDiet] = await Promise.all([
+      knex('meals').count('id', { as: 'total' }).first(),
+      knex('meals').where('is_diet', 1).count('id', { as: 'diet' }).first(),
+      knex('meals').where('is_diet', 0).count('id', { as: 'not_diet' }).first(),
+    ])
+
+    return {
+      metrics: {
+        total: total?.total,
+        diet: diet?.diet,
+        not_diet: notDiet?.not_diet,
+      },
+    }
+  })
 }
