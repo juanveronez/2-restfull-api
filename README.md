@@ -1,6 +1,5 @@
 # Requisitos Funcionais
 
-- [ ] Deve ser possível criar um usuário
 - [ ] Deve ser possível registrar uma refeição feita
 - [ ] Deve ser possível editar uma refeição
 - [ ] Deve ser possível apagar uma refeição
@@ -11,10 +10,11 @@
     - [ ] Quantidade total de refeições dentro da dieta
     - [ ] Quantidade total de refeições fora da dieta
     - [ ] Melhor sequência de refeições dentro da dieta
+- [ ] Deve ser possível criar um usuário
 
 # Regras de Negócio
 - [ ] Deve ser possível identificar o usuário entre as requisições
-- [ ] Uma refeição deve ter os seguintes campos obrigatórios:
+- [x] Uma refeição deve ter os seguintes campos obrigatórios:
     - Nome
     - Descrição
     - Data e Hora
