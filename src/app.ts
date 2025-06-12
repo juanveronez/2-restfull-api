@@ -1,10 +1,6 @@
 import fastify from 'fastify'
-import { knex } from './infra/database'
+import { mealsRoute } from './routes/meals'
 
 export const app = fastify()
 
-app.get('/', async () => {
-  const meals = await knex('meals').select()
-
-  return { meals }
-})
+app.register(mealsRoute, { prefix: 'meals' })
