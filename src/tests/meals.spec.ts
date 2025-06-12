@@ -85,4 +85,18 @@ describe('[routes] /meals', async () => {
       }),
     )
   })
+
+  it('DELETE /meals/:id', async () => {
+    await request(app.server).post('/meals').send(meal1).expect(201)
+
+    const mealsResponse1 = await request(app.server).get('/meals')
+
+    const mealId = mealsResponse1.body.meals[0].id
+    expect(mealId).toBeDefined()
+
+    await request(app.server).delete(`/meals/${mealId}`).expect(204)
+
+    const mealsResponse2 = await request(app.server).get('/meals')
+    expect(mealsResponse2.body.meals.length)
+  })
 })

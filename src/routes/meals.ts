@@ -20,4 +20,10 @@ export function mealsRoute(app: FastifyInstance) {
     const meal = await knex('meals').select().where('id', id).first()
     return { meal }
   })
+
+  app.delete('/:id', async ({ params }, reply) => {
+    const { id } = getMealParamsSchema.parse(params)
+    await knex('meals').delete().where('id', id)
+    return reply.status(204).send()
+  })
 }
