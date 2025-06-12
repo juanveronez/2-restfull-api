@@ -97,6 +97,28 @@ describe('[routes] /meals', async () => {
     await request(app.server).delete(`/meals/${mealId}`).expect(204)
 
     const mealsResponse2 = await request(app.server).get('/meals')
-    expect(mealsResponse2.body.meals.length)
+    expect(mealsResponse2.body.meals.length).toBe(0)
+  })
+
+  it('PUT /meals/:id', async () => {
+    await request(app.server).post('/meals').send(meal1).expect(201)
+
+    const mealsResponse = await request(app.server).get('/meals')
+
+    const mealId = mealsResponse.body.meals[0].id
+    expect(mealId).toBeDefined()
+
+    await request(app.server).put(`/meals/${mealId}`).send(meal2).expect(200)
+
+    const mealResponse = await request(app.server).get(`/meals/${mealId}`)
+    expect(mealResponse.body.meal).toEqual(
+      expect.objectContaining({
+        name: 'Take a chocolate bar',
+        description: 'I was sad and take something to eat',
+        is_diet: 0,
+        date: '2025-06-12',
+        time: '11:25',
+      }),
+    )
   })
 })
