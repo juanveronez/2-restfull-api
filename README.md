@@ -1,6 +1,6 @@
 # Requisitos Funcionais
 
-- [ ] Deve ser possível registrar uma refeição feita
+- [x] Deve ser possível registrar uma refeição feita
 - [ ] Deve ser possível editar uma refeição
 - [ ] Deve ser possível apagar uma refeição
 - [x] Deve ser possível listar todas as refeições de um usuário
